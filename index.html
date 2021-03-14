@@ -1,7 +1,56 @@
+<!DOCTYPE html>
 <html>
-<body>
-  <center><pre>
-pogn't
-  </pre></center>
-</body>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>
+      let map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 51.4038068, lng: 21.1754387 },
+          zoom: 17,
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        const myLatLng = { lat: 51.403986, lng: 21.17546 };
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 17,
+          center: myLatLng,
+        });
+        new google.maps.Marker({
+          position: myLatLng,
+          map,
+          title: "Hello World!",
+        });
+      }
+
+    </script>
+    
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI7H72RRPwGtNpkhAa7WxzhN5ZODqQAjU&callback=initMap&libraries=&v=weekly&language=ko"
+      async
+    ></script>
+  </body>
 </html>
