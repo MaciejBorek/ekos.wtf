@@ -1,6 +1,6 @@
 function sleep( sleepDuration ){
     var now = new Date().getTime();
-    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+    while(new Date().getTime() < now + sleepDuration){  do nothing  } 
 }
 function gc() {
     for (let i = 0; i < 0x10; i++) {
